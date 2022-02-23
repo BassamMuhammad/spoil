@@ -13,6 +13,7 @@ export const MyHeading = ({
         fontSize: fontSize,
         color: color,
         textAlign: textAlign,
+        fontWeight: 'bold',
       }}>
       {text}
     </Text>

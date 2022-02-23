@@ -18,3 +18,16 @@ export const addUserInfo = async (
     email: email.toLowerCase(),
   });
 };
+
+export const getUser = async userId => {
+  const user = await firestore().doc(`users/${userId}`).get();
+  return user.data();
+};
+
+export const changeUserInfo = async (id, firstName, lastName, dob) => {
+  await firestore().doc(`users/${id}`).update({
+    firstName,
+    lastName,
+    dob,
+  });
+};

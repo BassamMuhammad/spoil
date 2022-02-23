@@ -83,7 +83,6 @@ export const Signin = ({navigation}) => {
                 source={require('../../assets/images/logo.png')}
                 style={styles.logo}
               />
-              <MyText text="Stand out from the crowd" color="#fff" />
               <View style={styles.innerContainer}>
                 <View style={{marginBottom: 20}}>
                   <MyHeading text="Sign in" />
