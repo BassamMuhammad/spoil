@@ -14,7 +14,7 @@ import {MyHeading} from '../../components/Common/MyHeading';
 import {MyText} from '../../components/Common/MyText';
 import {AuthSubmitButton} from '../../components/Common/AuthSubmitButton';
 import {MyTextField} from '../../components/Common/MyTextField';
-import {changeUserInfo, getUser} from '../../firebase/firestore/user';
+import {changeUserInfo, getUser} from '../../firebase/firestore/users';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/userSlice';
 import {Loading} from '../../components/Common/Loading';
@@ -56,6 +56,7 @@ export const Profile = () => {
       setOnSubmitLoading(true);
       await changeUserInfo(userId, firstName, lastName, dob);
       alert('Info Changed Successfully');
+      setOnSubmitLoading(false);
     } catch (e) {
       setOnSubmitLoading(false);
       alert('Error occured. Try again');

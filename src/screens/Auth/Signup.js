@@ -58,7 +58,6 @@ export const Signup = ({navigation}) => {
         dob,
       };
       const userId = await signupWithEmail(tempUser);
-      setLoading(false);
       dispatch(changeUser(userId));
     } catch (e) {
       switch (e.code) {

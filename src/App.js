@@ -15,6 +15,7 @@ import {store} from './redux/store';
 import {useSelector, useDispatch} from 'react-redux';
 import {changeUser, selectUser} from './redux/features/userSlice';
 import {checkAuth} from './firebase/auth/checkAuth';
+import {signout} from './firebase/auth/signout';
 
 const App = () => {
   return (
@@ -31,10 +32,12 @@ const Main = () => {
   const Tab = createBottomTabNavigator();
 
   useEffect(() => {
-    const authSubscriber = checkAuth(user => dispatch(changeUser(user.uid)));
-    return () => authSubscriber();
+    const authSubscriber = checkAuth(user => dispatch(changeUser(user?.uid)));
+    return () => {
+      if (authSubscriber) authSubscriber();
+    };
   }, []);
-
+  // signout();
   return (
     <NavigationContainer>
       {!userId ? (

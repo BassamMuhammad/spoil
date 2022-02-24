@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {MyHeading} from '../../components/Common/MyHeading';
 import {MyText} from '../../components/Common/MyText';
-import {getSpoils, getSpoilType} from '../../firebase/firestore/spoil';
+import {getSpoils} from '../../firebase/firestore/spoils';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/userSlice';
 
@@ -38,7 +38,9 @@ export const Spoil = () => {
           {spoils.map((spoilGroup, i) => {
             return (
               <View key={i} style={{marginVertical: 5}}>
-                <MyHeading text={spoilGroup[0].date.toDateString()} />
+                {spoilGroup.length > 0 && (
+                  <MyHeading text={spoilGroup[0].date.toDateString()} />
+                )}
                 {spoilGroup.map((spoil, j) => {
                   return (
                     <View key={j}>
