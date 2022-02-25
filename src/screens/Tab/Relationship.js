@@ -61,6 +61,41 @@ export const Relationship = ({navigation}) => {
     });
   }, [relationships]);
 
+  const renderRelations = ({index, item: relatedUser}) => {
+    return (
+      <Pressable
+        key={index}
+        style={styles.userContainer}
+        onPress={() =>
+          navigation.navigate('Chat', {
+            userId,
+            relatedUserId: relatedUser.id,
+          })
+        }>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}>
+          <LoadingImage
+            style={styles.profilePic}
+            source={{uri: relatedUser.profilePic}}
+          />
+          <View>
+            <MyHeading
+              text={`${relatedUser.firstName} ${relatedUser.lastName[0]}.`}
+            />
+            <MyText text={'lorem ipsum'} color="#C4C4C4" />
+          </View>
+        </View>
+        <View style={styles.new}>
+          <MyText text="New" color="white" />
+        </View>
+      </Pressable>
+    );
+  };
+
   return loading ? (
     <Loading />
   ) : (
@@ -72,40 +107,12 @@ export const Relationship = ({navigation}) => {
           <Image source={require('../../assets/images/search.png')} />
         </Pressable>
       </View>
-      <FlatList style={{paddingHorizontal: 20}}>
-        {relatedUsers.map((relatedUser, i) => (
-          <Pressable
-            key={i}
-            style={styles.userContainer}
-            onPress={() =>
-              navigation.navigate('Chat', {
-                userId,
-                relatedUserId: relatedUser.id,
-              })
-            }>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-              }}>
-              <LoadingImage
-                style={styles.profilePic}
-                source={{uri: relatedUser.profilePic}}
-              />
-              <View>
-                <MyHeading
-                  text={`${relatedUser.firstName} ${relatedUser.lastName[0]}.`}
-                />
-                <MyText text={'lorem ipsum'} color="#C4C4C4" />
-              </View>
-            </View>
-            <View style={styles.new}>
-              <MyText text="New" color="white" />
-            </View>
-          </Pressable>
-        ))}
-      </FlatList>
+      <FlatList
+        style={{paddingHorizontal: 20}}
+        data={relatedUsers}
+        renderItem={renderRelations}
+        ke
+      />
     </SafeAreaView>
   );
 };

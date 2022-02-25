@@ -27,13 +27,13 @@ export const getUser = async userId => {
   const user = await firestore().doc(`users/${userId}`).get();
   return user.data();
 };
-export const getUsersBasedOnId = async userIds => {
+export const getUsersBasedOnId = async usersId => {
   const rawUsers = await firestore()
     .collection(`users`)
-    .where('id', 'in', userIds)
+    .where('id', 'in', usersId)
     .get();
   const users = [];
-  rawUsers.forEach(user => users.push(user.data()));
+  rawUsers.forEach(rawUser => users.push(rawUser.data()));
   return users;
 };
 
