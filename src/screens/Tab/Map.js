@@ -1,12 +1,15 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+  Image,
+  Text,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 
 export const Map = () => {
-  return (
-    <View>
-      <Text>Map</Text>
-    </View>
-  );
+  return <Text>Map</Text>;
 };
 
 const styles = StyleSheet.create({});

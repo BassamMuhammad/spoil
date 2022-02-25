@@ -6,9 +6,12 @@ import * as Progress from 'react-native-progress';
 export const AuthSubmitButton = ({text, onPress, disabled, loading}) => {
   return (
     <Pressable
-      style={styles.button}
+      style={[
+        styles.button,
+        {backgroundColor: !disabled ? '#FF8112' : 'rgba(200,200,200,0.5)'},
+      ]}
       onPress={onPress}
-      disabled={disabled || loading}>
+      disabled={disabled}>
       {!loading ? (
         <MyText text={text} color="white" textAlign="center" />
       ) : (

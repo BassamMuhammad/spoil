@@ -1,16 +1,19 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   View,
   StyleSheet,
   Pressable,
-  Image,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Image,
+  PermissionsAndroid,
 } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {MyHeading} from '../../components/Common/MyHeading';
 import {MyText} from '../../components/Common/MyText';
 import {MyTextField} from '../../components/Common/MyTextField';
@@ -18,10 +21,10 @@ import {AuthSubmitButton} from '../../components/Common/AuthSubmitButton';
 import {signupWithEmail} from '../../firebase/auth/signup';
 import {useDispatch} from 'react-redux';
 import {changeUser} from '../../redux/features/userSlice';
+import {LoadingImage} from '../../components/Common/LoadingImage';
 
 export const Signup = ({navigation}) => {
   const dispatch = useDispatch();
-
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const genderRef = useRef();
@@ -37,6 +40,56 @@ export const Signup = ({navigation}) => {
   const [showDate, setShowDate] = useState(false);
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [image, setImage] = useState('');
+  useEffect(() => {
+    const getLocation = async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Spoil:me',
+            message: 'Spoil:me wants to access your location ',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          Geolocation.getCurrentPosition(
+            position => {
+              setLocation(position);
+              console.log(position);
+            },
+            error => {
+              console.log(error.code, error.message);
+              alert('Location Permission not given');
+            },
+            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+          );
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getLocation();
+  }, []);
+
+  const pickImage = async () => {
+    ImagePicker.openPicker({
+      width: 500,
+      height: 400,
+      cropping: true,
+      mediaType: 'photo',
+      compressImageQuality: 1,
+      cropperCircleOverlay: true,
+    })
+      .then(image => {
+        console.log(image);
+        if (image.path) setImage(image.path);
+      })
+      .catch(e => {
+        alert('Image not selected');
+        console.log(e);
+      });
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -56,6 +109,8 @@ export const Signup = ({navigation}) => {
         email,
         password,
         dob,
+        profilePic: image,
+        location,
       };
       const userId = await signupWithEmail(tempUser);
       dispatch(changeUser(userId));
@@ -69,6 +124,8 @@ export const Signup = ({navigation}) => {
           break;
         case 'auth/weak-password':
           setError({password: 'Weak password.'});
+        default:
+          alert('Some error occured. Please try again');
       }
       console.log('signup', e);
       setLoading(false);
@@ -103,6 +160,18 @@ export const Signup = ({navigation}) => {
                     </Pressable>
                   </View>
                 </View>
+                <Pressable onPress={pickImage}>
+                  {image ? (
+                    <LoadingImage
+                      style={styles.profilePic}
+                      source={{uri: image}}
+                    />
+                  ) : (
+                    <View style={styles.profilePic}>
+                      <MyText text="Select Profile Pic" />
+                    </View>
+                  )}
+                </Pressable>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -166,6 +235,7 @@ export const Signup = ({navigation}) => {
                   errorText={error.password}
                   blurOnSubmit={true}
                 />
+
                 <View
                   style={{
                     marginVertical: '5%',
@@ -177,6 +247,11 @@ export const Signup = ({navigation}) => {
                   </Pressable>
                   <MyText text={dob.toLocaleDateString()} />
                 </View>
+                {location && (
+                  <View style={{marginBottom: '5%'}}>
+                    <MyText text="Location data collected" textAlign="center" />
+                  </View>
+                )}
                 {showDate && (
                   <DateTimePicker
                     value={dob}
@@ -191,13 +266,18 @@ export const Signup = ({navigation}) => {
                 <AuthSubmitButton
                   text="Sign up"
                   disabled={
-                    !firstName || !lastName || !gender || !email || !password
+                    !firstName ||
+                    !lastName ||
+                    !gender ||
+                    !email ||
+                    !password ||
+                    !location ||
+                    !image
                   }
                   loading={loading}
                   onPress={handleSubmit}
                 />
               </View>
-              <View style={styles.lastView} />
             </View>
           </ScrollView>
         </Pressable>
@@ -208,13 +288,14 @@ export const Signup = ({navigation}) => {
 
 const styles = StyleSheet.create({
   outerContainer: {
+    backgroundColor: '#fff',
     flex: 1,
   },
   scrollContainer: {
-    backgroundColor: '#fff',
     width: '101%',
   },
   inner: {
+    paddingBottom: 20,
     alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
@@ -245,9 +326,14 @@ const styles = StyleSheet.create({
     maxHeight: 40,
     resizeMode: 'contain',
   },
-  lastView: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: '#fff',
+  profilePic: {
+    borderRadius: 100,
+    backgroundColor: '#F1F1F1',
+    height: 140,
+    width: 140,
+    marginBottom: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
 });

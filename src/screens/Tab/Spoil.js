@@ -1,4 +1,4 @@
-import {SafeAreaView, View, Image, StyleSheet, ScrollView} from 'react-native';
+import {SafeAreaView, View, StyleSheet, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {MyHeading} from '../../components/Common/MyHeading';
@@ -6,6 +6,7 @@ import {MyText} from '../../components/Common/MyText';
 import {getSpoils} from '../../firebase/firestore/spoils';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/userSlice';
+import {LoadingImage} from '../../components/Common/LoadingImage';
 
 export const Spoil = () => {
   const userId = useSelector(selectUser);
@@ -45,7 +46,10 @@ export const Spoil = () => {
                   return (
                     <View key={j}>
                       <View style={styles.spoilContainer}>
-                        <Image source={{uri: spoil.image}} style={styles.img} />
+                        <LoadingImage
+                          source={{uri: spoil.image}}
+                          style={styles.img}
+                        />
                         <View>
                           <MyHeading text={spoil.type} fontSize={18} />
                           <MyText
@@ -69,20 +73,20 @@ export const Spoil = () => {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    marginTop: '10%',
-    marginHorizontal: '5%',
+    marginTop: 30,
+    marginHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   infosContainer: {
     width: '100%',
-    marginVertical: '5%',
+    marginVertical: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
   infoContainer: {
-    padding: '5%',
-    paddingLeft: '2%',
+    padding: 20,
+    paddingLeft: 10,
     width: '45%',
     borderWidth: 3,
     borderRadius: 10,

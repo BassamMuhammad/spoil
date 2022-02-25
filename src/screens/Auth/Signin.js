@@ -4,10 +4,10 @@ import {
   View,
   StyleSheet,
   Pressable,
-  Image,
   KeyboardAvoidingView,
   ScrollView,
   Keyboard,
+  Image,
 } from 'react-native';
 import {MyHeading} from '../../components/Common/MyHeading';
 import {MyText} from '../../components/Common/MyText';
@@ -136,7 +136,6 @@ export const Signin = ({navigation}) => {
                   onPress={onSigninWithEmail}
                 />
               </View>
-              <View style={styles.lastView} />
             </View>
           </ScrollView>
         </Pressable>
@@ -147,15 +146,17 @@ export const Signin = ({navigation}) => {
 
 const styles = StyleSheet.create({
   outerContainer: {
+    backgroundColor: '#fff',
     flex: 1,
   },
   scrollContainer: {
-    backgroundColor: '#fff',
     width: '101%',
   },
   inner: {
     alignItems: 'center',
     flex: 1,
+    paddingBottom: 20,
+    paddingBottom: '2%',
     justifyContent: 'flex-end',
   },
   innerContainer: {
@@ -176,10 +177,5 @@ const styles = StyleSheet.create({
     marginTop: 40,
     maxHeight: 40,
     resizeMode: 'contain',
-  },
-  lastView: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: '#fff',
   },
 });

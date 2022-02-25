@@ -1,5 +1,11 @@
 import React, {useRef, useState} from 'react';
-import {SafeAreaView, View, StyleSheet, Pressable} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+} from 'react-native';
 import {MyHeading} from '../../components/Common/MyHeading';
 import {MyText} from '../../components/Common/MyText';
 import {AuthSubmitButton} from '../../components/Common/AuthSubmitButton';
@@ -19,7 +25,7 @@ export const ForgotPassword = ({navigation}) => {
           onPress={() => navigation.goBack()}>
           <MyText text="Back" color="gray" />
         </Pressable>
-        <View style={{marginBottom: '15%', marginTop: '10%'}}>
+        <View style={{marginBottom: 25, marginTop: 20}}>
           <MyHeading text="Forgot Password" textAlign="center" />
           <MyText
             text="Enter the email you signed up with"
@@ -27,35 +33,39 @@ export const ForgotPassword = ({navigation}) => {
             textAlign="center"
           />
         </View>
-        <MyTextField
-          label="Email"
-          keyboardType="email-address"
-          refer={emailRef}
-          value={email}
-          onChangeText={newVal => setEmail(newVal)}
-          returnKeyType="done"
-          blurOnSubmit={true}
-        />
-
-        <View style={{marginTop: '10%'}}>
-          <AuthSubmitButton
-            text="Send reset password link"
-            disabled={!email}
-            loading={loading}
-            onPress={async () => {
-              try {
-                setLoading(true);
-                await forgotPassword(email);
-              } catch (e) {
-              } finally {
-                alert(
-                  `An email has been sent to ${email}. If you don't find it try looking in your spam folder or try again`,
-                );
-                navigation.navigate('Signin');
-              }
-            }}
+        <ScrollView
+          style={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}>
+          <MyTextField
+            label="Email"
+            keyboardType="email-address"
+            refer={emailRef}
+            value={email}
+            onChangeText={newVal => setEmail(newVal)}
+            returnKeyType="done"
+            blurOnSubmit={true}
           />
-        </View>
+
+          <View style={{marginTop: 20}}>
+            <AuthSubmitButton
+              text="Send reset password link"
+              disabled={!email}
+              loading={loading}
+              onPress={async () => {
+                try {
+                  setLoading(true);
+                  await forgotPassword(email);
+                } catch (e) {
+                } finally {
+                  alert(
+                    `An email has been sent to ${email}. If you don't find it try looking in your spam folder or try again`,
+                  );
+                  navigation.navigate('Signin');
+                }
+              }}
+            />
+          </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -67,6 +77,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scrollContainer: {
+    backgroundColor: '#fff',
+    flex: 1,
+    width: '101%',
   },
   innerContainer: {
     height: '100%',

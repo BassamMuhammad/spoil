@@ -4,7 +4,6 @@ import {
   View,
   StyleSheet,
   Pressable,
-  Image,
   KeyboardAvoidingView,
   ScrollView,
   Keyboard,
@@ -14,10 +13,11 @@ import {MyHeading} from '../../components/Common/MyHeading';
 import {MyText} from '../../components/Common/MyText';
 import {AuthSubmitButton} from '../../components/Common/AuthSubmitButton';
 import {MyTextField} from '../../components/Common/MyTextField';
-import {changeUserInfo, getUser} from '../../firebase/firestore/users';
+import {changeUserData, getUser} from '../../firebase/firestore/users';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/userSlice';
 import {Loading} from '../../components/Common/Loading';
+import {LoadingImage} from '../../components/Common/LoadingImage';
 
 export const Profile = () => {
   const firstNameRef = useRef();
@@ -54,7 +54,7 @@ export const Profile = () => {
   const onSubmit = async () => {
     try {
       setOnSubmitLoading(true);
-      await changeUserInfo(userId, firstName, lastName, dob);
+      await changeUserData(userId, firstName, lastName, dob);
       alert('Info Changed Successfully');
       setOnSubmitLoading(false);
     } catch (e) {
@@ -75,7 +75,7 @@ export const Profile = () => {
             style={styles.scrollContainer}
             showsVerticalScrollIndicator={false}>
             <View style={styles.inner}>
-              <Image
+              <LoadingImage
                 source={require('../../assets/images/logo.png')}
                 style={styles.logo}
               />
@@ -120,7 +120,7 @@ export const Profile = () => {
                     }}
                   />
                 )}
-                <View style={{marginTop: '10%'}}>
+                <View style={{marginTop: 30}}>
                   <AuthSubmitButton
                     text="Change Info"
                     disabled={

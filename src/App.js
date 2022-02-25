@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -8,6 +8,7 @@ import {Signin} from './screens/Auth/Signin';
 import {ForgotPassword} from './screens/Auth/ForgotPassword';
 import {Profile} from './screens/Tab/Profile';
 import {Relationship} from './screens/Tab/Relationship';
+import {Chat} from './screens/Tab/Chat';
 import {Map} from './screens/Tab/Map';
 import {Spoil} from './screens/Tab/Spoil';
 import {Provider} from 'react-redux';
@@ -16,6 +17,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {changeUser, selectUser} from './redux/features/userSlice';
 import {checkAuth} from './firebase/auth/checkAuth';
 import {signout} from './firebase/auth/signout';
+import {Loading} from './components/Common/Loading';
 
 const App = () => {
   return (
@@ -25,20 +27,36 @@ const App = () => {
   );
 };
 
+const RelationshipStack = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="RelationshipScreen" component={Relationship} />
+      <Stack.Screen name="Chat" component={Chat} />
+    </Stack.Navigator>
+  );
+};
+
 const Main = () => {
   const dispatch = useDispatch();
   const userId = useSelector(selectUser);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
     const authSubscriber = checkAuth(user => dispatch(changeUser(user?.uid)));
     return () => {
       if (authSubscriber) authSubscriber();
     };
   }, []);
   // signout();
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <NavigationContainer>
       {!userId ? (
         <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -70,18 +88,13 @@ const Main = () => {
                   ? require('./assets/images/profileClick.png')
                   : require('./assets/images/profile.png');
               }
-              return (
-                <Image
-                  source={icon}
-                  // style={styles.logo}
-                />
-              );
+              return <Image source={icon} />;
             },
             tabBarActiveTintColor: 'black',
             tabBarInactiveTintColor: 'gray',
           })}>
           <Tab.Screen name="Spoil" component={Spoil} />
-          <Tab.Screen name="Relationship" component={Relationship} />
+          <Tab.Screen name="Relationship" component={RelationshipStack} />
           <Tab.Screen name="Map" component={Map} />
           <Tab.Screen name="Profile" component={Profile} />
         </Tab.Navigator>
