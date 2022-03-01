@@ -4,7 +4,7 @@ import {MyText} from '../Common/MyText';
 import {MyHeading} from '../Common/MyHeading';
 import React from 'react';
 
-export const UserList = ({otherUsers, userId, lastMessages}) => {
+export const UserList = ({otherUsers, userId, lastMessages, navigation}) => {
   const renderRelations = ({index, item: otherUser}) => {
     return (
       <Pressable

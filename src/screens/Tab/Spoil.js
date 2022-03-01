@@ -7,10 +7,13 @@ import {getSpoils} from '../../firebase/firestore/spoils';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/userSlice';
 import {LoadingImage} from '../../components/Common/LoadingImage';
+import {getUsersById} from '../../firebase/firestore/users';
+import {Loading} from '../../components/Common/Loading';
 
 export const Spoil = () => {
   const userId = useSelector(selectUser);
   const [spoils, setSpoils] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const spoilSubscriber = getSpoils(userId, setSpoils);
@@ -51,7 +54,7 @@ export const Spoil = () => {
                           style={styles.img}
                         />
                         <View>
-                          <MyHeading text={spoil.type} fontSize={18} />
+                          <MyHeading text={spoil.name} fontSize={18} />
                           <MyText
                             text={`Received from ${spoil.from}`}
                             color="gray"

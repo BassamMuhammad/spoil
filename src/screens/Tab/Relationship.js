@@ -116,6 +116,7 @@ export const Relationship = ({navigation}) => {
         userId={userId}
         lastMessages={lastMessages}
         otherUsers={filteredUsers}
+        navigation={navigation}
       />
       <FloatingAction
         color="black"

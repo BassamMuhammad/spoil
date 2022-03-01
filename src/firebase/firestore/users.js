@@ -35,6 +35,7 @@ export const getUsersById = async usersId => {
     .get();
   const users = [];
   rawUsers.forEach(rawUser => users.push(rawUser.data()));
+  console.log(users);
   return users;
 };
 

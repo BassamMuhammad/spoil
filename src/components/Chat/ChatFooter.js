@@ -33,6 +33,7 @@ export const ChatFooter = ({userId, relatedUserId}) => {
   const handleSend = async () => {
     try {
       await sendMessage(userId, relatedUserId, selectedSpoilType, message);
+      setMessage('');
       alert('Message send succesfully');
     } catch (error) {
       console.log(e);

@@ -67,37 +67,39 @@ export const Map = () => {
           style={{width: '100%', height: '90%'}}
           region={region}
           onRegionChange={setRegion}>
-          {relatedUsers.map((relatedUser, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: relatedUser.location.coords.latitude,
-                longitude: relatedUser.location.coords.longitude,
-              }}>
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  padding: 10,
-                  borderRadius: 15,
+          {relatedUsers.map((relatedUser, index) => {
+            return (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: relatedUser.location.coords.latitude,
+                  longitude: relatedUser.location.coords.longitude,
                 }}>
-                <LoadingImage
-                  style={{width: 50, height: 50, borderRadius: 50}}
-                  source={{uri: relatedUser.profilePic}}
-                />
-              </View>
-              <View
-                style={{
-                  width: 0,
-                  height: 0,
-                  borderLeftWidth: 6,
-                  borderRightWidth: 6,
-                  borderTopWidth: 10,
-                  borderColor: 'transparent',
-                  borderTopColor: 'white',
-                  alignSelf: 'center',
-                }}></View>
-            </Marker>
-          ))}
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    padding: 10,
+                    borderRadius: 15,
+                  }}>
+                  <LoadingImage
+                    style={{width: 50, height: 50, borderRadius: 50}}
+                    source={{uri: relatedUser.profilePic}}
+                  />
+                </View>
+                <View
+                  style={{
+                    width: 0,
+                    height: 0,
+                    borderLeftWidth: 6,
+                    borderRightWidth: 6,
+                    borderTopWidth: 10,
+                    borderColor: 'transparent',
+                    borderTopColor: 'white',
+                    alignSelf: 'center',
+                  }}></View>
+              </Marker>
+            );
+          })}
         </MapView>
       )}
     </SafeAreaView>

@@ -10,7 +10,7 @@ export const sendMessage = async (from, to, spoil, text) => {
     to,
     spoil,
     text,
-    sentAt: firestore.Timestamp.now(),
+    date: firestore.Timestamp.now(),
     read: false,
   });
   addSpoilData(spoil.name, spoil.image, from, to);
@@ -19,7 +19,7 @@ export const sendMessage = async (from, to, spoil, text) => {
 export const getMessages = (user1, user2, setMessages) => {
   return firestore()
     .collection(`chats`)
-    .where('from', 'in', [user1, user2])
+    .where('from', '==', user1)
     .orderBy('date', 'asc')
     .onSnapshot(chatsSnapshot => {
       const messages = [];

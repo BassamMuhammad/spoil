@@ -12,7 +12,7 @@ export const ChatBody = ({userId, relatedUserId}) => {
 
     return () => messageSubscriber();
   }, [userId, relatedUserId]);
-  console.log(messages);
+
   const renderMessages = ({index, item: message}) => {
     const isUser = message.from === userId;
     return (

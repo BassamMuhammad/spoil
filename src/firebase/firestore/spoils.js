@@ -21,6 +21,7 @@ export const getSpoils = (userId, setSpoils) => {
       date1.getMonth() === date2.getMonth()
     );
   };
+
   return firestore()
     .collection('spoils')
     .where('to', '==', `${userId}`)
