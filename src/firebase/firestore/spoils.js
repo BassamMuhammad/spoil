@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import uuid from 'react-native-uuid';
 
-export const addSpoilInfo = async (name, image, from, to) => {
+export const addSpoilData = async (name, image, from, to) => {
   const id = uuid.v4();
   await firestore().doc(`spoils/${id}`).set({
     id,
@@ -51,4 +51,11 @@ export const getSpoils = (userId, setSpoils) => {
 export const getSpoilType = async name => {
   const spoilType = await firestore().doc(`spoilTypes/${name}`).get();
   return spoilType.data();
+};
+
+export const getAllSpoilTypes = async () => {
+  const rawSpoilTypes = await firestore().collection(`spoilTypes`).get();
+  let spoilTypes = [];
+  rawSpoilTypes.forEach(rawSpoilType => spoilTypes.push(rawSpoilType.data()));
+  return spoilTypes;
 };
