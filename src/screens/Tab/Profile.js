@@ -43,7 +43,6 @@ export const Profile = () => {
         initialSetLastName(user.lastName);
         initialSetDob(user.dob);
         setInitialLoading(false);
-        console.log('d');
       })
       .catch(e => {
         alert('An error occured.Try again');

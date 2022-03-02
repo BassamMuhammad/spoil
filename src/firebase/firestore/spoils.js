@@ -30,21 +30,19 @@ export const getSpoils = (userId, setSpoils) => {
       const tempSpoils = [];
       let tempDate = new Date();
       let tempSpoilDateGroup = [];
-      let addedToMainList = false;
       spoilsSnapshot.forEach((spoilSnapshot, i) => {
-        addedToMainList = false;
         const tempSpoil = spoilSnapshot.data();
         const spoilDate = tempSpoil.date.toDate();
         tempSpoil.date = spoilDate;
-        tempSpoilDateGroup.push(tempSpoil);
         if (i !== 0 && !isDateEqual(tempDate, spoilDate)) {
+          console.log('here');
           tempSpoils.push(tempSpoilDateGroup);
           tempSpoilDateGroup = [];
           tempDate = spoilDate;
-          addedToMainList = true;
         }
+        tempSpoilDateGroup.push(tempSpoil);
       });
-      if (!addedToMainList) tempSpoils.push(tempSpoilDateGroup);
+      tempSpoils.push(tempSpoilDateGroup);
       setSpoils(tempSpoils);
     });
 };

@@ -29,27 +29,6 @@ export const CreateRelationship = ({navigation}) => {
         alert('Error occured. Please try again');
       });
   }, [searchText]);
-  console.log(users);
-  const renderUsers = ({index, item: user}) => {
-    return (
-      <Pressable key={index} style={styles.userContainer} onPress={() => {}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}>
-          <LoadingImage
-            style={styles.profilePic}
-            source={{uri: user.profilePic}}
-          />
-          <View>
-            <MyHeading text={`${user.firstName} ${user.lastName[0]}.`} />
-          </View>
-        </View>
-      </Pressable>
-    );
-  };
 
   return (
     <SafeAreaView style={styles.container}>

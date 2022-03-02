@@ -3,7 +3,6 @@ import storage from '@react-native-firebase/storage';
 
 export const uploadProfilePic = async profilePic => {
   const storageRef = storage().ref().child(`profilePics/${uuid.v4()}`);
-  console.log('about to put');
   await storageRef.putFile(profilePic);
   return await storageRef.getDownloadURL();
 };

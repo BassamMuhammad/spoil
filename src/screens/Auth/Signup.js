@@ -56,7 +56,6 @@ export const Signup = ({navigation}) => {
           Geolocation.getCurrentPosition(
             position => {
               setLocation(position);
-              console.log(position);
             },
             error => {
               console.log(error.code, error.message);
@@ -82,7 +81,6 @@ export const Signup = ({navigation}) => {
       cropperCircleOverlay: true,
     })
       .then(image => {
-        console.log(image);
         if (image.path) setImage(image.path);
       })
       .catch(e => {
@@ -127,7 +125,6 @@ export const Signup = ({navigation}) => {
         default:
           alert('Some error occured. Please try again');
       }
-      console.log('signup', e);
       setLoading(false);
     }
   };

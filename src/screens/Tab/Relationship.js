@@ -34,7 +34,6 @@ export const Relationship = ({navigation}) => {
     setLoading(true);
     getUserRelationships(userId)
       .then(res => {
-        console.log('s');
         setRelationships(res);
       })
       .catch(e => {

@@ -14,16 +14,23 @@ import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/userSlice';
 import {getUser, getUsersById} from '../../firebase/firestore/users';
 import {LoadingImage} from '../../components/Common/LoadingImage';
+import MapHeader from '../../components/Map/MapHeader';
+import MapModal from '../../components/Map/MapModal';
+import {MyText} from '../../components/Common/MyText';
 
 export const Map = () => {
   const [region, setRegion] = useState(null);
-  const [markers, setMarkers] = useState([]);
   const userId = useSelector(selectUser);
   const [relatedUsers, setRelatedUsers] = useState([]);
-  const [user, setUser] = useState(null);
+  const [selectedRelatedUser, setSelectedRelatedUser] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   useEffect(() => {
     getUser(userId).then(user => {
-      setUser(user);
       setRegion({
         latitude: user.location.coords.latitude,
         longitude: user.location.coords.longitude,
@@ -54,13 +61,7 @@ export const Map = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={require('../../assets/images/bar_left.png')} />
-        <Image source={require('../../assets/images/logo.png')} />
-        <Pressable style={styles.searchButton}>
-          <Image source={require('../../assets/images/search.png')} />
-        </Pressable>
-      </View>
+      <MapHeader />
 
       {region && relatedUsers && (
         <MapView
@@ -71,6 +72,10 @@ export const Map = () => {
             return (
               <Marker
                 key={index}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                  setSelectedRelatedUser(relatedUser);
+                }}
                 coordinate={{
                   latitude: relatedUser.location.coords.latitude,
                   longitude: relatedUser.location.coords.longitude,
@@ -102,6 +107,14 @@ export const Map = () => {
           })}
         </MapView>
       )}
+      {selectedRelatedUser && (
+        <MapModal
+          userId={userId}
+          relatedUser={selectedRelatedUser}
+          closeModal={closeModal}
+          modalVisible={modalVisible}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -110,21 +123,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-  },
-  logoContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 20,
-    marginVertical: 45,
-  },
-  searchButton: {
-    elevation: 15,
-    shadowColor: 'black',
-    backgroundColor: 'white',
-    borderRadius: 5,
-    paddingHorizontal: 2,
-    shadowOpacity: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
