@@ -7,7 +7,7 @@ export const RelationshipHeader = ({searchText, setSearchText}) => {
     <View>
       <View style={styles.logoContainer}>
         <Image source={require('../../assets/images/bar_left.png')} />
-        <Image source={require('../../assets/images/logo.png')} />
+        <Image style={{width:125,height:31}} source={require('../../assets/images/logo.png')} />
         <Pressable
           style={styles.searchButton}
           onPress={() => setShowSearch(!showSearch)}>

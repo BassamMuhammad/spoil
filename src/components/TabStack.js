@@ -3,6 +3,7 @@ import {Image} from 'react-native';
 import {Profile} from '../screens/Tab/Profile';
 import {Relationship} from '../screens/Tab/Relationship';
 import {Map} from '../screens/Tab/Map';
+import Home from '../screens/Tab/Home';
 import {Spoil} from '../screens/Tab/Spoil';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -39,6 +40,8 @@ export function TabStack() {
       })}>
       <Tab.Screen name="Spoil" component={Spoil} />
       <Tab.Screen name="Relationship" component={Relationship} />
+      <Tab.Screen name="Home" component={Home} />
+
       <Tab.Screen name="Map" component={Map} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
