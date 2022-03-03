@@ -6,14 +6,16 @@ import React from 'react';
 
 export const UserList = ({otherUsers, userId, lastMessages, navigation}) => {
   const renderRelations = ({index, item: otherUser}) => {
+    console.log(lastMessages);
     return (
       <Pressable
         key={index}
         style={[
           styles.userContainer,
-          lastMessages && {
-            backgroundColor: lastMessages[index].read ? '#E7F8FF' : 'white',
-          },
+          lastMessages &&
+            lastMessages[index] && {
+              backgroundColor: lastMessages[index].read ? '#E7F8FF' : 'white',
+            },
         ]}
         onPress={() => {
           if (lastMessages)
@@ -39,7 +41,7 @@ export const UserList = ({otherUsers, userId, lastMessages, navigation}) => {
             <MyHeading
               text={`${otherUser.firstName} ${otherUser.lastName[0]}.`}
             />
-            {lastMessages && (
+            {lastMessages && lastMessages[index] && (
               <MyText
                 text={`Sent you a ${lastMessages[index].spoil.name}!`}
                 color="#C4C4C4"
@@ -47,7 +49,7 @@ export const UserList = ({otherUsers, userId, lastMessages, navigation}) => {
             )}
           </View>
         </View>
-        {lastMessages && lastMessages[index].read && (
+        {lastMessages && lastMessages[index] && lastMessages[index].read && (
           <View style={styles.new}>
             <MyText text="New" color="white" />
           </View>
