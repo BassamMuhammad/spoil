@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "692916728604",
-    "project_id": "spoil-5ce0f",
-    "storage_bucket": "spoil-5ce0f.appspot.com"
+    "project_number": "402944316207",
+    "project_id": "spoilme-1",
+    "storage_bucket": "spoilme-1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:692916728604:android:9f0b397dce6a95388a00d9",
+        "mobilesdk_app_id": "1:402944316207:android:59d6532175ec898051c7da",
         "android_client_info": {
           "package_name": "com.spoil"
         }
       },
       "oauth_client": [
         {
-          "client_id": "692916728604-be2d0v94q0b5i1cvhcf1lq0d1srdepfv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.spoil",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "692916728604-n4n6blh8vkq191bkof9hj8dfveakomtk.apps.googleusercontent.com",
+          "client_id": "402944316207-7l9hmjdeoac3t4n5pbfgfih23p7smsop.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBnr8_mOfpzlKzVp9SleO2kPoobxPNFowY"
+          "current_key": "AIzaSyAgnJDcaDa-ocTGwlyD04u8Rbo-MZv3z0Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "692916728604-n4n6blh8vkq191bkof9hj8dfveakomtk.apps.googleusercontent.com",
+              "client_id": "402944316207-7l9hmjdeoac3t4n5pbfgfih23p7smsop.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

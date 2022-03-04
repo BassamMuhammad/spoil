@@ -46,6 +46,7 @@ export const Map = () => {
             tempRelatedUsersId.push(relationship.user2);
           else tempRelatedUsersId.push(relationship.user1);
         });
+        if (tempRelatedUsersId.length === 0) return;
         getUsersById(tempRelatedUsersId)
           .then(users => setRelatedUsers(users))
           .catch(e => {

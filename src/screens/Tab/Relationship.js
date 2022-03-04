@@ -38,9 +38,9 @@ export const Relationship = ({navigation}) => {
       })
       .catch(e => {
         console.log(e);
-        setLoading(false);
         alert('Error occured. Please Try again');
-      });
+      })
+      .finally(() => setLoading(false));
   }, [userId]);
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export const Relationship = ({navigation}) => {
     } else setFilteredUsers(relatedUsers);
   }, [searchText]);
 
-  return loading || lastMessages.length === 0 ? (
+  return loading ? (
     <Loading />
   ) : (
     <SafeAreaView style={styles.container}>
