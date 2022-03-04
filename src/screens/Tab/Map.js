@@ -49,13 +49,13 @@ export const Map = () => {
         getUsersById(tempRelatedUsersId)
           .then(users => setRelatedUsers(users))
           .catch(e => {
-            console.log(e);
-            alert('Error occured');
+            console.log("error line 52",e);
+            alert('Error1 occured');
           });
       })
       .catch(e => {
         console.log(e);
-        alert('Error occured');
+        alert('Error2 occured');
       });
   }, []);
 

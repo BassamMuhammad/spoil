@@ -29,6 +29,7 @@ export const getUser = async userId => {
 };
 
 export const getUsersById = async usersId => {
+  console.log('user',usersId);
   const rawUsers = await firestore()
     .collection(`users`)
     .where('id', 'in', usersId)

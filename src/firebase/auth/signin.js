@@ -3,7 +3,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 GoogleSignin.configure({
   webClientId:
-    '692916728604-n4n6blh8vkq191bkof9hj8dfveakomtk.apps.googleusercontent.com',
+    '402944316207-7l9hmjdeoac3t4n5pbfgfih23p7smsop.apps.googleusercontent.com',
 });
 
 export const signinWithEmail = async (email, password) => {
